@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    #   数据源基本配置
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    #在这里说一下为什么会出现这样的问题，因为我创建的是springboot项目，在pom中添加mysql依赖，并没有设置版本号，
+    #因为springboot内部配置过了。它配置的版本号是8.0.13  就是因为mysql的版本太高了，所以才会出现这个报错。
+    #在配置文件中的 连接字符串后面加上?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/ssm ?serverTimezone=UTC
+    type: com.alibaba.druid.pool.DruidDataSource
+    #   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    #initialization-mode: always
+
+    #schema:
+    # - classpath:sql/department.sql
